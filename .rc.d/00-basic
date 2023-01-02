@@ -1,0 +1,41 @@
+pathupdate() {
+  while [[ -n "$1" ]]; do
+    case ":${PATH:=$1}:" in
+      *:"$1":*)
+      ;;
+      *) export PATH="$1:$PATH"
+      ;;
+    esac;
+    shift
+  done
+}
+
+shopt -s extglob histappend histreedit histverify cmdhist cdspell checkwinsize
+shopt -s globstar
+set -o pipefail
+umask 0077
+
+pathupdate /usr/sbin ${HOME}/bin ${HOME}/.local/bin
+
+export EDITOR="vim"
+export PAGER="less"
+export LESS="-iMSx4 -z-4 -FX"
+
+export TIMEFORMAT="%Y-%m-%d %H:%M:%S"
+export HISTTIMEFORMAT="${TIMEFORMAT} "
+export HISTCONTROL=""
+export HISTSIZE="-1"
+export HISTFILESIZE="-1"
+
+export CDPATH=.:~
+export PS_FORMAT="ruser,pid,ppid,s,stat,nice,pri,cls,%cpu,rss,nwchan,wchan,cmd"
+export TIME_STYLE="+${TIMEFORMAT}"
+
+export OLD_PATH="${PATH}"
+export TMP=/tmp
+
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+  source /usr/share/bash-completion/bash_completion
+fi
+
+#EOF

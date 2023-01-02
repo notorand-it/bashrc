@@ -1,0 +1,21 @@
+export NEWPS1="\u@\h \w "
+export PS1=${NEWPS1}
+export OLD_PROMPT_COMMAND=${PROMPT_COMMAND}
+function promptfunction {
+  res=$?
+  history -a
+  history -n
+  GIT=$(git symbolic-ref HEAD 2> /dev/null) && GIT='{'${GIT#refs/heads/}'} '
+  case $res in
+    0|127|130) # OK, not found, BREAK
+      res=
+    ;;
+    *)
+      res="  $res"
+      res="[${res: -3}] "
+    ;;
+  esac
+  PS1="#\D{$TIMEFORMAT} ${res}${GIT}${NEWPS1}\\n\$ "
+}
+
+[[ -n "$DISPLAY" || -n "$COLUMNS" && $COLUMNS -ge 80 ]] && export PROMPT_COMMAND=promptfunction

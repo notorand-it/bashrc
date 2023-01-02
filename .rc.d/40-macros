@@ -1,0 +1,26 @@
+function ,save {
+  mkdir -p .save &> /dev/null
+  tar cfz .save/$(date +'%Y%m%d-%H%M%S').tar.gz --exclude=.save .
+}
+
+function ,load {
+  vers=$(ls -r .save 2> /dev/null)
+  if [ -z "${vers}" ]; then
+    echo "No saved versions"
+    return 1
+  fi
+  select ver in ${vers}; do
+    tar xf .save/${ver}
+    ls -l
+    return
+  done
+}
+
+function ,rcdb () {
+  tar cfJ ~/Files/rc.d-$(date +'%Y%m%d%H%M%S').tar.xz ~/.bashrc ~/.rc* 2> /dev/null || echo error
+}
+
+function ,ix () {
+  eval $* 2>&1 | curl -F 'f:1=<-' ix.io
+}
+#EOF

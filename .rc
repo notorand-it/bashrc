@@ -1,0 +1,5 @@
+RCDIR=${HOME}/.rc.d
+for file in $RCDIR/*; do
+  [[ -r "$file" ]] && source "$file" || true
+done || true
+#EOF
