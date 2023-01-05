@@ -25,7 +25,7 @@ With wider screens it adds some interesting details: last command timestamp, opt
 
 ## Notes
 1. You can embedd the `.rc` file in the `.bashrc`. You won't gain any noticeable init speedup at the possible cost of lesser flexibility.
-2. Those are not script in the "*usual*" sense as they ar elacking the shebang prologue. This ensures all setup actions happen within the main shell.
+2. Those are not script in the "*usual*" sense as they are lacking the *shebang* prologue. This ensures all setup actions happen within the (same) main shell.
 
 ## References
 - [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html)
